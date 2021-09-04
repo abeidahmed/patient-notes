@@ -1,1 +1,11 @@
-<%= patient.name %>
+<div class="col-span-1 p-4 rounded-md border shadow">
+  <div class="flex items-center space-x-4">
+    <div class="flex-shrink-0 rounded-full h-9 w-9 shadow border overflow-hidden">
+      <%= image_tag patient.avatar %>
+    </div>
+
+    <div class="flex-1">
+      <%= link_to patient.name, new_patient_note_path(patient), class: "hover:text-blue-700" %>
+    </div>
+  </div>
+</div>
