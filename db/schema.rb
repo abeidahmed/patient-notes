@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2021_09_04_065552) do
 
   create_table "patients", force: :cascade do |t|
     t.string "name", null: false
+    t.string "avatar"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
