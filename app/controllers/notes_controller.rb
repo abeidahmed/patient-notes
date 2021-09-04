@@ -1,8 +1,8 @@
 class NotesController < ApplicationController
+  before_action :underscore_params!, only: %i[create]
+
   def new
     @patient = get_patient
-    @note = @patient.notes.build
-    @note.practice_words.build
   end
 
   def create

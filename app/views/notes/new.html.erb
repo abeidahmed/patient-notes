@@ -4,6 +4,6 @@
   </h1>
 
   <div class="max-w-lg w-full mx-auto mt-8">
-    <%= render "form", patient: @patient, note: @note %>
+    <note-form :patient_id="<%= @patient.id.to_json %>"></note-form>
   </div>
 </main>
