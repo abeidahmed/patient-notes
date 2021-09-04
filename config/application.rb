@@ -18,5 +18,11 @@ module NotesApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.generators.stylesheets = false
+    config.generators.helper = false
+    config.generators.helper_specs = false
+
+    config.generators.test_framework :test_unit, fixture: false
   end
 end
