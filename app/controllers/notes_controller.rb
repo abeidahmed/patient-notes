@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
   def new
-    patient = get_patient
-    @note = patient.notes.build
+    @patient = get_patient
+    @note = @patient.notes.build
     @note.practice_words.build
   end
 
@@ -10,7 +10,7 @@ class NotesController < ApplicationController
     note = patient.notes.build(note_params)
 
     if note.save
-      # do
+      redirect_to patients_path, notice: "Note has been created"
     else
       render_json_errors(note.errors)
     end

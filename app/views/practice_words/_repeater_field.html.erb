@@ -1,0 +1,49 @@
+<div class="space-y-4 pt-4">
+  <section>
+    <div>
+      <%= f.label :name, "Practice word", class: "inline-block mb-2" %>
+      <%= f.text_field :name, class: "block w-full rounded-md border-gray-300", placeholder: "/sh/ IWP, bird, fish, etc" %>
+    </div>
+
+    <div class="flex items-center justify-between mt-2">
+      <div class="flex-1 flex items-center flex-wrap text-gray-700">
+        <%= render_svg "plus" %>
+        <%= render_svg "subtract" %>
+      </div>
+
+      <div class="flex-shrink-0">
+        <button type="button" class="p-1 rounded-md text-green-600 hover:bg-green-100">
+          <%= render_svg "check" %>
+        </button>
+
+        <button type="button" class="p-1 rounded-md text-red-600 hover:bg-red-100">
+          <%= render_svg "close" %>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <label class="inline-flex flex-items-center">
+      <input type="checkbox", class="rounded-sm border-gray-300 mt-1" />
+
+      <span class="ml-2 leading-5">
+        Track word specific errors?
+      </span>
+    </label>
+
+    <%= f.text_field :word_error, class: "block w-full rounded-md border-gray-300 mt-2", placeholder: "Mispronounced swim, kick, catch, throw" %>
+  </section>
+
+  <section>
+    <label class="inline-flex flex-items-center">
+      <input type="checkbox", class="rounded-sm border-gray-300 mt-1" />
+
+      <span class="ml-2 leading-5">
+        Add additional information?
+      </span>
+    </label>
+
+    <%= f.text_area :additional_info, class: "block w-full rounded-md border-gray-300 mt-2", rows: 4, placeholder: "Any other information about the word..." %>
+  </section>
+</div>
