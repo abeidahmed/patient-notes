@@ -1,6 +1,11 @@
 class NotesController < ApplicationController
   before_action :underscore_params!, only: %i[create]
 
+  def index
+    @patient = get_patient
+    @notes = @patient.notes
+  end
+
   def new
     @patient = get_patient
   end
@@ -14,6 +19,11 @@ class NotesController < ApplicationController
     else
       render_json_errors(note.errors)
     end
+  end
+
+  def show
+    @patient = get_patient
+    @note = @patient.notes.includes(practice_words: :pronunciations).find(params[:id])
   end
 
   private

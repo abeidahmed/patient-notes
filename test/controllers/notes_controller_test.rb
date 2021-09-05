@@ -5,6 +5,13 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     @patient = create(:patient)
   end
 
+  test "listing all the patients notes" do
+    create_list(:note, 3, patient: @patient)
+    get patient_notes_path(@patient)
+
+    assert_equal 3, assigns(:notes).count
+  end
+
   test "instantiating a new note" do
     get new_patient_note_path(@patient)
 
@@ -52,5 +59,12 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_equal 2, PracticeWord.last.pronunciations.count
+  end
+
+  test "showing a single note" do
+    note = create(:note, patient: @patient)
+    get patient_note_path(@patient, note)
+
+    assert_equal note, assigns(:note)
   end
 end

@@ -1,0 +1,9 @@
+<main class="py-8">
+  <h1 class="text-center text-2xl font-semibold">
+    Notes for <%= @patient.name %>
+  </h1>
+
+  <div class="grid grid-cols-3 mt-8 max-w-5xl w-full mx-auto gap-4">
+    <%= render @notes %>
+  </div>
+</main>
