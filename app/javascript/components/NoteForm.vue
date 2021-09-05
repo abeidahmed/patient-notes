@@ -1,5 +1,5 @@
 <template>
-  <form @submit="createNote" class="space-y-4">
+  <form @submit="createNote" @submit.prevent="createNote" class="space-y-4">
     <section>
       <label class="mb-2 inline-block font-semibold" for="poc">
         Plan of care
@@ -35,28 +35,9 @@
               />
             </div>
 
-            <div class="flex items-center justify-between mt-2">
-              <div class="flex-1 flex items-center flex-wrap text-gray-700">
-                <BaseIcon><PlusIcon /></BaseIcon>
-                <BaseIcon><MinusIcon /></BaseIcon>
-              </div>
-
-              <div class="flex-shrink-0">
-                <button
-                  type="button"
-                  class="p-1 rounded-md text-green-600 hover:bg-green-100"
-                >
-                  <BaseIcon><CheckIcon /></BaseIcon>
-                </button>
-
-                <button
-                  type="button"
-                  class="p-1 rounded-md text-red-600 hover:bg-red-100"
-                >
-                  <BaseIcon><XIcon /></BaseIcon>
-                </button>
-              </div>
-            </div>
+            <PronunciationStatus
+              @pronounced="addPronunciationStatus(field.id, $event)"
+            />
           </section>
 
           <ToggleableField
@@ -110,56 +91,39 @@
 <script>
 import { FetchRequest } from '@rails/request.js';
 import uuid from '../helpers/uuid';
-import removeProperties from '../helpers/remove_properties';
 import ToggleableField from './ToggleableField.vue';
-import BaseIcon from './icons/BaseIcon.vue';
-import CheckIcon from './icons/CheckIcon.vue';
-import XIcon from './icons/XIcon.vue';
-import PlusIcon from './icons/PlusIcon.vue';
-import MinusIcon from './icons/MinusIcon.vue';
+import PronunciationStatus from './PronunciationStatus.vue';
 
 export default {
-  components: {
-    ToggleableField,
-    BaseIcon,
-    CheckIcon,
-    XIcon,
-    PlusIcon,
-    MinusIcon,
-  },
+  components: { ToggleableField, PronunciationStatus },
   props: ['patient_id'],
   data: function() {
     return {
       poc: '',
-      fields: [
-        {
-          id: uuid(),
-          name: '',
-          wordError: '',
-          additionalInfo: '',
-        },
-      ],
+      fields: [],
     };
   },
+  created() {
+    this.addField();
+  },
   methods: {
-    addField(event) {
-      event.preventDefault();
-
+    addField() {
       this.fields.push({
         id: uuid(),
         name: '',
         wordError: '',
         additionalInfo: '',
+        pronunciationsAttributes: [],
       });
     },
     removeField(id) {
       this.fields = this.fields.filter((field) => field.id !== id);
     },
-    async createNote(event) {
-      event.preventDefault();
-
-      const fieldObjects = removeProperties(this.fields, ...['id']);
-
+    addPronunciationStatus(fieldId, array) {
+      const foundField = this.fields.find((field) => field.id === fieldId);
+      foundField.pronunciationsAttributes = array;
+    },
+    async createNote() {
       const request = new FetchRequest(
         'post',
         `/patients/${this.patient_id}/notes`,
@@ -167,7 +131,7 @@ export default {
           body: JSON.stringify({
             note: {
               poc: this.poc,
-              practiceWordsAttributes: fieldObjects,
+              practiceWordsAttributes: this.fields,
             },
           }),
         }

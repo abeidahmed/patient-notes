@@ -22,11 +22,11 @@ class NotesController < ApplicationController
     params.require(:note).permit(
       :poc,
       practice_words_attributes: [
-        :id,
         :name,
         :word_error,
         :additional_info,
-        :_destroy
+        :_destroy,
+        pronunciations_attributes: [:result, :_destroy]
       ]
     )
   end

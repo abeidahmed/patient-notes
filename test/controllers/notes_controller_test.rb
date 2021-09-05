@@ -25,5 +25,32 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
         ]}
       }
     end
+
+    assert_equal 1, Note.last.practice_words.count
+  end
+
+  test "creating a note with an unknown practice word" do
+    post patient_notes_path(@patient), params: {
+      note: {poc: "Anything", practice_words_attributes: [
+        {name: "", word_error: "Shard, Shark", additional_info: "Any other information"}
+      ]}
+    }
+
+    assert Note.last.practice_words.count.zero?
+  end
+
+  test "creating a note with pronunciation results" do
+    post patient_notes_path(@patient), params: {
+      note: {poc: "Anything", practice_words_attributes: [
+        {
+          name: "/sh/",
+          word_error: "Shard, Shark",
+          additional_info: "Any other information",
+          pronunciations_attributes: [{result: "pronounced"}, {result: "mispronounced"}]
+        }
+      ]}
+    }
+
+    assert_equal 2, PracticeWord.last.pronunciations.count
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_04_065552) do
+ActiveRecord::Schema.define(version: 2021_09_05_063927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 2021_09_04_065552) do
     t.index ["note_id"], name: "index_practice_words_on_note_id"
   end
 
+  create_table "pronunciations", force: :cascade do |t|
+    t.bigint "practice_word_id", null: false
+    t.integer "result"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["practice_word_id"], name: "index_pronunciations_on_practice_word_id"
+    t.index ["result"], name: "index_pronunciations_on_result"
+  end
+
   add_foreign_key "notes", "patients"
   add_foreign_key "practice_words", "notes"
+  add_foreign_key "pronunciations", "practice_words"
 end
