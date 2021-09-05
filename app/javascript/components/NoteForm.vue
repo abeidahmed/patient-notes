@@ -1,5 +1,5 @@
 <template>
-  <form @submit="createNote" @submit.prevent="createNote" class="space-y-4">
+  <form @submit.prevent="createNote" class="space-y-4">
     <section>
       <label class="mb-2 inline-block font-semibold" for="poc">
         Plan of care
