@@ -9,6 +9,7 @@
         v-model="poc"
         id="poc"
         class="block w-full rounded-md border-gray-300"
+        placeholder="STG=3 visual identification"
         autocomplete="off"
         required
       />
