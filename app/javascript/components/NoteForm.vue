@@ -9,6 +9,8 @@
         v-model="poc"
         id="poc"
         class="block w-full rounded-md border-gray-300"
+        autocomplete="off"
+        required
       />
     </section>
 
@@ -29,6 +31,7 @@
                 id="practice-word"
                 class="block w-full rounded-md border-gray-300"
                 placeholder="/sh/ IWP, bird, fish, etc"
+                autocomplete="off"
               />
             </div>
 
@@ -60,14 +63,12 @@
             v-model="field.wordError"
             placeholder="Mispronounced swim, kick, catch, throw"
             label="Track word specific errors?"
-            :active="field.trackWordError"
           />
 
           <ToggleableField
             v-model="field.additionalInfo"
             placeholder="Any other information about the word..."
             label="Add additional information?"
-            :active="field.trackAdditionalInfo"
             type="textarea"
           />
 
@@ -136,8 +137,6 @@ export default {
           name: '',
           wordError: '',
           additionalInfo: '',
-          trackWordError: false,
-          trackAdditionalInfo: false,
         },
       ],
     };
@@ -151,8 +150,6 @@ export default {
         name: '',
         wordError: '',
         additionalInfo: '',
-        trackWordError: false,
-        trackAdditionalInfo: false,
       });
     },
     removeField(id) {
@@ -161,10 +158,7 @@ export default {
     async createNote(event) {
       event.preventDefault();
 
-      const fieldObjects = removeProperties(
-        this.fields,
-        ...['id', 'trackWordError', 'trackAdditionalInfo']
-      );
+      const fieldObjects = removeProperties(this.fields, ...['id']);
 
       const request = new FetchRequest(
         'post',

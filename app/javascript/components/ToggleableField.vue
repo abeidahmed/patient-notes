@@ -16,11 +16,12 @@
     <div v-if="type === 'textarea'">
       <textarea
         :value="value"
-        @input="$emit('input', $event.target.value)"
+        @input="emitValue($event.target.value)"
         :placeholder="placeholder"
         v-show="showField"
         rows="4"
         class="block w-full rounded-md border-gray-300 mt-2"
+        autocomplete="off"
       ></textarea>
     </div>
 
@@ -28,10 +29,11 @@
       <input
         :type="type"
         :value="value"
-        @input="$emit('input', $event.target.value)"
+        @input="emitValue($event.target.value)"
         :placeholder="placeholder"
         v-show="showField"
         class="block w-full rounded-md border-gray-300 mt-2"
+        autocomplete="off"
       />
     </div>
   </section>
@@ -41,7 +43,7 @@
 export default {
   data: function() {
     return {
-      showField: this.active,
+      showField: false,
     };
   },
   props: {
@@ -55,12 +57,11 @@ export default {
       type: String,
       default: '',
     },
-    active: {
-      type: Boolean,
-      default: false,
-    },
   },
   methods: {
+    emitValue(value) {
+      this.$emit('input', value);
+    },
     toggleField(event) {
       if (event.target.checked) {
         this.showField = true;
