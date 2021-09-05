@@ -8,6 +8,16 @@ class PracticeWord < ApplicationRecord
 
   validates :name, presence: true
 
+  def total_pronunciation_attempts
+    pronounced_count + mispronounced_count
+  end
+
+  def success_percentage
+    return if total_pronunciation_attempts.zero?
+
+    (pronounced_count.to_f / total_pronunciation_attempts * 100).ceil
+  end
+
   private
 
   def not_explicit?(attributes)

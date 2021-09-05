@@ -13,9 +13,13 @@
     <% end %>
   </div>
 
-  <div class="mt-2">
-    <p>Result: 19/20 = 100%</p>
-  </div>
+  <% if practice_word.total_pronunciation_attempts.positive? %>
+    <div class="mt-2">
+      <p>
+        Result: <%= calculate_result(practice_word) %>
+      </p>
+    </div>
+  <% end %>
 
   <% if practice_word.word_error.present? %>
     <div class="mt-3">
