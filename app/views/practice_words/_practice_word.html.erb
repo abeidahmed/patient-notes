@@ -1,0 +1,37 @@
+<div class="pt-3">
+  <h3 class="text-lg font-semibold">
+    <%= practice_word.name %>
+  </h3>
+
+  <div class="flex items-center flex-wrap mt-1">
+    <% practice_word.pronunciations.each do |pronunciation| %>
+      <% if pronunciation.pronounced? %>
+        <%= render_svg "plus" %>
+      <% elsif pronunciation.mispronounced? %>
+        <%= render_svg "subtract" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if practice_word.total_pronunciation_attempts.positive? %>
+    <div class="mt-2">
+      <p>
+        Result: <%= calculate_result(practice_word) %>
+      </p>
+    </div>
+  <% end %>
+
+  <% if practice_word.word_error.present? %>
+    <div class="mt-3">
+      <h4 class="font-semibold">Word specific errors:</h4>
+      <p><%= practice_word.word_error %></p>
+    </div>
+  <% end %>
+
+  <% if practice_word.additional_info.present? %>
+    <div class="mt-3">
+      <h4 class="font-semibold">Additional information:</h4>
+      <p><%= practice_word.additional_info %></p>
+    </div>
+  <% end %>
+</div>

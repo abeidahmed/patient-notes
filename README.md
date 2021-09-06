@@ -1,24 +1,41 @@
-# README
+# Patient notes
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting started
 
-Things you may want to cover:
+- Clone the repo
 
-* Ruby version
+```bash
+git clone https://github.com/abeidahmed/patient-notes.git
+```
 
-* System dependencies
+- Install the dependencies
 
-* Configuration
+```bash
+bundle install && yarn
+```
 
-* Database creation
+- Setup your database and seed some data
 
-* Database initialization
+```bash
+rails db:setup
+```
 
-* How to run the test suite
+- Start the server
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+foreman start
+```
 
-* Deployment instructions
+or, run these in separate terminals
 
-* ...
+```bash
+rails s
+```
+
+```bash
+./bin/webpack-dev-server
+```
+
+- Visit `localhost:3000/patients`
+- Click on the patient's name and click on `Add a new note` after redirect
+- Fill in the note form as desired and click on `Create note`
