@@ -140,7 +140,10 @@ export default {
 
       try {
         const response = await request.perform();
-        if (!response.ok) throw new Error('Something went wrong!');
+        if (response.ok) {
+          const { patient_id, id } = await response.json
+          window.location.href = `/patients/${patient_id}/notes/${id}`
+        }
       } catch (error) {
         console.log(error);
       }

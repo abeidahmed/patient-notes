@@ -15,7 +15,9 @@ class NotesController < ApplicationController
     note = patient.notes.build(note_params)
 
     if note.save
-      redirect_to patients_path, notice: "Note has been created"
+      respond_to do |format|
+        format.any { render json: note, status: :created }
+      end
     else
       render_json_errors(note.errors)
     end

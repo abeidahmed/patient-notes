@@ -74,12 +74,15 @@ export default {
         result,
       });
 
-      this.$emit('pronounced', this.pronunciations);
+      this.emitPronunciations()
     },
     resetPronunciations() {
       this.pronunciations = [];
-      this.$emit('pronounced', this.pronunciations);
+      this.emitPronunciations()
     },
+    emitPronunciations() {
+      this.$emit('pronounced', this.pronunciations);
+    }
   },
   computed: {
     totalPronounced() {
